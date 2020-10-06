@@ -46,14 +46,23 @@ int main(void)
 
 
   /* Enable clock for GPIO port A*/
-
-	//type your code for GPIOA clock enable here:
+  RCC_AHBENR_REG |= (uint32_t)(1 << 17);
 
 
   /* GPIOA pin 3 and 4 setup */
+  //PIN3 - button - input
 
-	//type your code for GPIOA pins setup here:
 
+  *GPIOA_MODER_REG &= ~(uint32_t)(0x3 << 6); //NASTAVIME INPUT
+  *GPIOA_PUPDR_REG |= (1 << 6); //NASTAVIME PULLUP
+  //PIN4 - led - output
+
+
+  *GPIOA_MODER_REG &= ~(uint32_t)(0x3 << 8); //NASTAVIME OUTPUT
+  *GPIOA_MODER_REG |= (uint32_t)(1 << 8); //NASTAVIME OUTPUT
+  *GPIOA_OTYPER_REG &= ~(1 << 4); //NASTAVIME OUTPUT PUSH-PULL
+  *GPIOA_OSPEEDER_REG &= ~(0x3 << 8); //NASTAVIME LOW SPEED
+  *GPIOA_PUPDR_REG &= ~(0x3 << 8); //NASTAVIME NO-PULLUP NOPULLDOWN
 
   while (1)
   {
